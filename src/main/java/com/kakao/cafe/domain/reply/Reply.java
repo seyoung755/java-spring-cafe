@@ -15,6 +15,12 @@ public class Reply {
         this.articleId = articleId;
     }
 
+    public Reply(String writer, String contents, Long articleId) {
+        this.writer = writer;
+        this.contents = contents;
+        this.articleId = articleId;
+    }
+
     public Long getId() {
         return id;
     }

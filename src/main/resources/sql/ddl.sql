@@ -19,7 +19,7 @@ id int AUTO_INCREMENT PRIMARY KEY,
 writer varchar(20) NOT NULL,
 title varchar(20) NOT NULL,
 contents TEXT,
-created_date DATETIME DEFAULT CURRENT_TIMESTAMP
+created_date DATETIME DEFAULT CURRENT_TIME
 );
 
 INSERT INTO ARTICLE (writer, title, contents) VALUES ('suntory', '작성 글 제목', '작성 글 내용');

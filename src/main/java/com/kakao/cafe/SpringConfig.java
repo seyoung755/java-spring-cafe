@@ -2,6 +2,8 @@ package com.kakao.cafe;
 
 import com.kakao.cafe.domain.article.ArticleJdbcTemplateRepository;
 import com.kakao.cafe.domain.article.ArticleRepository;
+import com.kakao.cafe.domain.reply.ReplyJdbcTemplateRepository;
+import com.kakao.cafe.domain.reply.ReplyRepository;
 import com.kakao.cafe.domain.user.UserJdbcTemplateRepository;
 import com.kakao.cafe.domain.user.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -26,5 +28,10 @@ public class SpringConfig {
     @Bean
     public UserRepository userRepository() {
         return new UserJdbcTemplateRepository(dataSource);
+    }
+
+    @Bean
+    public ReplyRepository replyRepository() {
+        return new ReplyJdbcTemplateRepository(dataSource);
     }
 }

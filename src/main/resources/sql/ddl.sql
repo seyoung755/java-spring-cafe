@@ -19,7 +19,7 @@ id int AUTO_INCREMENT PRIMARY KEY,
 writer varchar(20) NOT NULL,
 title varchar(20) NOT NULL,
 contents TEXT NOT NULL,
-created_date DATETIME DEFAULT CURRENT_TIME
+created_date DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 INSERT INTO ARTICLE (writer, title, contents) VALUES ('suntory', '작성 글 제목', '작성 글 내용');
@@ -32,5 +32,5 @@ id INT PRIMARY KEY AUTO_INCREMENT,
 article_id INT NOT NULL,
 writer varchar(20) NOT NULL,
 contents TEXT NOT NULL,
-created_date DATETIME DEFAULT CURRENT_TIME,
+created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY(article_id) REFERENCES article(id) ON DELETE CASCADE);

@@ -32,7 +32,7 @@ public class ArticleController {
 
     @PostMapping("/questions")
     public String save(ArticleSaveRequestDto requestDto, HttpSession session) {
-        validateWriter(requestDto, session);
+        validateWriter(requestDto.getWriter(), session);
         articleService.save(requestDto);
         return "redirect:/";
     }
@@ -49,14 +49,14 @@ public class ArticleController {
 
     @DeleteMapping("/articles/{id}")
     public String delete(@PathVariable Long id, HttpSession session) {
-        validateSessionUser(id, session);
+        validateWriterByArticleId(id, session);
         articleService.deleteById(id);
         return "redirect:/";
     }
 
     @GetMapping("/articles/{id}/update")
     public String updateForm(@PathVariable Long id, Model model, HttpSession session) {
-        validateSessionUser(id, session);
+        validateWriterByArticleId(id, session);
         Article article = articleService.findById(id);
         model.addAttribute("article", article);
         return "qna/update_form";
@@ -64,24 +64,21 @@ public class ArticleController {
 
     @PutMapping("/articles/{id}/update")
     public String update(@PathVariable Long id, ArticleUpdateRequestDto dto, HttpSession session) {
-        validateSessionUser(id, session);
+        validateWriterByArticleId(id, session);
         articleService.update(dto);
         return "redirect:/articles/" + id;
     }
 
-    private void validateSessionUser(Long id, HttpSession session) {
+    private void validateWriterByArticleId(Long id, HttpSession session) {
         Article article = articleService.findById(id);
         String writer = article.getWriter();
-        Object sessionUser = session.getAttribute("sessionUser");
-        if (sessionUser == null || !((User) sessionUser).getUserId().equals(writer)) {
-            throw new IllegalArgumentException("본인이 작성한 글만 수정 가능합니다");
-        }
+        validateWriter(writer, session);
     }
 
-    private void validateWriter(ArticleSaveRequestDto requestDto, HttpSession session) {
+    private void validateWriter(String writer, HttpSession session) {
         Object sessionUser = session.getAttribute("sessionUser");
         User user = (User) sessionUser;
-        if (!user.getUserId().equals(requestDto.getWriter())) {
+        if (sessionUser == null || !user.isSameWriter(writer)) {
             throw new IllegalArgumentException("글쓴이와 현재 유저 아이디가 다릅니다.");
         }
     }

@@ -68,4 +68,8 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public boolean isSameWriter(String writer) {
+        return this.userId.equals(writer);
+    }
 }

@@ -13,7 +13,7 @@ spring:
         enabled: true
   sql:
     init:
-      schema-locations: classpath:sql/ddl.sql
+      schema-locations: classpath:sql/init.sql
       mode: always
 server:
   servlet:
